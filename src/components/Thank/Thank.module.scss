@@ -1,0 +1,46 @@
+@import "../../scss/variables";
+
+.thank {
+  &_body {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 100%;
+    @media (max-width: 595px) {
+      padding: 55px 0px;
+    }
+    &__main {
+      text-align: center;
+
+      &_img {
+        img {
+          display: inline-block;
+          width: 80px;
+          height: 80px;
+
+          @media (max-width: 595px) {
+            width: 55px;
+            height: 55px;
+          }
+        }
+      }
+      &_title {
+        font-size: 30px;
+        color: $nextStep;
+        margin: 30px 0 17px 0;
+
+        @media (max-width: 595px) {
+          margin: 22px 0 10px 0;
+          font-size: 25px;
+        }
+      }
+      &_text {
+        line-height: 25px;
+        p {
+          font-size: 16px;
+          color: $coolGray;
+        }
+      }
+    }
+  }
+}

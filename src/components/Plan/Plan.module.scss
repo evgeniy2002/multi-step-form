@@ -1,0 +1,106 @@
+@import "../../scss/variables";
+
+.plan {
+  &_body {
+    height: 100%;
+    position: relative;
+    &__row {
+      display: flex;
+      margin: 0 -9px;
+
+      @media (max-width: 595px) {
+        display: block;
+        margin: 0;
+      }
+    }
+    &__columns {
+      padding: 0 9px;
+      flex: 0 1 33.333%;
+      // flex: 0 1 135px;
+      @media (max-width: 595px) {
+        padding: 0;
+        &:not(:last-of-type) {
+          margin: 0 0 15px 0;
+        }
+      }
+    }
+    &__item {
+      //width: 100%;
+      width: 135px;
+      min-height: 160px;
+      border: 1px solid $lightGray;
+      padding: 15px;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      border-radius: 10px;
+      -webkit-border-radius: 10px;
+      -moz-border-radius: 10px;
+      -ms-border-radius: 10px;
+      -o-border-radius: 10px;
+      cursor: pointer;
+
+      @media (max-width: 800px) {
+        width: 100%;
+      }
+      @media (max-width: 595px) {
+        min-height: 75px;
+        flex-direction: row;
+        align-items: center;
+      }
+      &.active {
+        // background-color: red;
+        background-color: #f8f9fe;
+        border: 1px solid $checkMark;
+      }
+      &:hover {
+        border: 1px solid $checkMark;
+      }
+    }
+    &__img {
+      flex: 1 1 100%;
+
+      @media (max-width: 595px) {
+        flex: 0;
+      }
+    }
+    &__content {
+      line-height: 22px;
+      p {
+        font-weight: 800;
+        color: $nextStep;
+      }
+      span {
+        display: block;
+        font-weight: 500;
+        font-size: 14px;
+        color: $coolGray;
+
+        &:nth-child(3) {
+          color: $nextStep;
+          font-weight: 400;
+        }
+      }
+      @media (max-width: 595px) {
+        margin: 0 0 0 15px;
+      }
+    }
+  }
+  &_checkbox {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fe;
+    padding: 12px 0;
+    margin: 30px 0 0 0;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    @media (max-width: 595px) {
+      margin: 20px 0 0 0;
+    }
+  }
+}

@@ -1,0 +1,107 @@
+@import "../../scss/variables";
+
+.info {
+  @media (max-width: 768px) {
+    padding: 40px;
+  }
+  @media (max-width: 645px) {
+    padding: 40px 20px;
+  }
+  @media (max-width: 595px) {
+    padding: 30px 20px 20px 20px;
+  }
+  &_body {
+    position: relative;
+    height: 100%;
+    // &__header {
+    //   margin: 0 0 40px 0;
+    //   @media (max-width: 595px) {
+    //     margin: 0 0 25px 0;
+    //   }
+    // }
+    // &__title {
+    //   font-size: 30px;
+    //   color: $nextStep;
+    //   margin: 0 0 13px 0;
+    // }
+    // &__subtitle {
+    //   color: $coolGray;
+    //   font-size: 16px;
+    //   @media (max-width: 595px) {
+    //     line-height: 25px;
+    //   }
+    // }
+    &__field {
+      display: block;
+
+      &:not(:last-of-type) {
+        margin: 0 0 25px 0;
+
+        @media (max-width: 595px) {
+          margin: 0 0 13px 0;
+        }
+      }
+    }
+    &__form {
+      display: flex;
+      flex-direction: column;
+      label {
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        color: $nextStep;
+      }
+      input {
+        display: block;
+        outline: none;
+        width: 100%;
+        border: 1px solid $lightGray;
+        padding: 14px 15px;
+        font-size: 14px;
+        font-weight: 500;
+        // font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: $nextStep;
+        border-radius: 8px;
+        -webkit-border-radius: 8px;
+        -moz-border-radius: 8px;
+        -ms-border-radius: 8px;
+        -o-border-radius: 8px;
+        cursor: pointer;
+        &.input_active {
+          border: 1px solid $requireBorder;
+        }
+
+        &:hover {
+          border: 1px solid #6360a0;
+        }
+        &::placeholder {
+          font-weight: 500;
+          color: $coolGray;
+        }
+      }
+
+      p {
+        margin: 0 0 0 auto;
+        font-size: 14px;
+        font-weight: 500;
+        color: $requireBorder;
+      }
+    }
+    &__label {
+      display: flex;
+      margin: 0 0 8px 0;
+
+      &:nth-child(3) {
+        flex: 1 1 100%;
+      }
+    }
+    &__next {
+      position: relative;
+      right: 0;
+      top: 100%;
+      background-color: red;
+      width: 100%;
+      height: 73px;
+    }
+  }
+}
