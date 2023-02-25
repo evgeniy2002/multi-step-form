@@ -5,11 +5,34 @@ import './scss/App.scss';
 import sidebar from './assets/images/bg-sidebar-desktop.svg';
 import { Info } from './components/Info';
 import { Plan } from './components/Plan';
-import { AddOns } from './components/AddOns.tsx';
+import { AddOns } from './components/AddOns';
 import { FinishUp } from './components/FinishUp';
 import { Thank } from './components/Thank';
+import { useAppSelector } from './redux/hooks';
 
 function App() {
+  const [stateSteps, setStateStap] = React.useState([
+    {
+      id: 1,
+      title: 'Your info',
+    },
+    {
+      id: 2,
+      title: 'Select Plan',
+    },
+    {
+      id: 3,
+      title: 'Add-ons',
+    },
+    {
+      id: 4,
+      title: 'Summary',
+    },
+  ]);
+
+  const step = useAppSelector((state) => state.step.step);
+  const confirm = useAppSelector((state) => state.step.confirm);
+
   React.useEffect(() => {
     ibg();
   }, []);
@@ -30,53 +53,33 @@ function App() {
         <main className="content">
           <aside className="content-sidebar">
             <div className="content-sidebar__body">
-              <div className="content-sidebar__item">
-                <div className="content-sidebar__step">
-                  <span>1</span>
+              {stateSteps.map((item, idx) => (
+                <div className="content-sidebar__item" key={item.id}>
+                  <div
+                    className={
+                      step === idx + 1
+                        ? 'content-sidebar__step sidebar_active'
+                        : 'content-sidebar__step'
+                    }>
+                    <span>{item.id}</span>
+                  </div>
+                  <div className="content-sidebar__info">
+                    <h5 className="content-sidebar__head">Step {item.id}</h5>
+                    <p className="content-sidebar__title">{item.title}</p>
+                  </div>
                 </div>
-                <div className="content-sidebar__info">
-                  <h5 className="content-sidebar__head">Step 1</h5>
-                  <p className="content-sidebar__title">Your info</p>
-                </div>
-              </div>
-              <div className="content-sidebar__item">
-                <div className="content-sidebar__step sidebar_active">
-                  <span>2</span>
-                </div>
-                <div className="content-sidebar__info">
-                  <h5 className="content-sidebar__head">Step 2</h5>
-                  <p className="content-sidebar__title">Select Plan</p>
-                </div>
-              </div>
-              <div className="content-sidebar__item">
-                <div className="content-sidebar__step">
-                  <span>3</span>
-                </div>
-                <div className="content-sidebar__info">
-                  <h5 className="content-sidebar__head">Step 3</h5>
-                  <p className="content-sidebar__title">Add-ons</p>
-                </div>
-              </div>
-              <div className="content-sidebar__item">
-                <div className="content-sidebar__step">
-                  <span>4</span>
-                </div>
-                <div className="content-sidebar__info">
-                  <h5 className="content-sidebar__head">Step 4</h5>
-                  <p className="content-sidebar__title">Summary</p>
-                </div>
-              </div>
+              ))}
             </div>
             <div className="content-sidebar__img ibg">
               <img src={sidebar} alt="" />
             </div>
           </aside>
           <div className="content-body">
-            {/* <Info /> */}
-            {/* <Plan /> */}
-            {/* <AddOns /> */}
-            {/* <FinishUp /> */}
-            <Thank />
+            {step === 1 && <Info />}
+            {step === 2 && <Plan />}
+            {step === 3 && <AddOns />}
+            {step === 4 && !confirm && <FinishUp />}
+            {confirm && <Thank />}
           </div>
         </main>
       </div>

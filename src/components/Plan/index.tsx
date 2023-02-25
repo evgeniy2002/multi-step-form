@@ -7,14 +7,66 @@ import pro from '../../assets/images/icon-pro.svg';
 
 import s from './Plan.module.scss';
 import { ContentFooter } from '../Btn/ContentFooter';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { choosePlan } from '../../redux/app';
+import { addPlanInfo } from '../../redux/plan/slice';
+
+type StateType = {
+  id: number;
+  img: string;
+  title: string;
+  rateMo: number;
+};
 
 export const Plan: React.FC = () => {
+  const activePlan = useAppSelector((state) => state.step.activePlan);
+  const yearly = useAppSelector((state) => state.plan.planInfo.yearly);
+  const dispatch = useAppDispatch();
+
   const [activeMark, setActiveMark] = React.useState<boolean>(false);
+
+  const [plans, setPlans] = React.useState<StateType[]>([
+    {
+      id: 1,
+      img: arcade,
+      title: 'Arcade',
+      rateMo: 9,
+    },
+    {
+      id: 2,
+      img: advanced,
+      title: 'Advanced',
+      rateMo: 12,
+    },
+    {
+      id: 3,
+      img: pro,
+      title: 'Pro',
+      rateMo: 15,
+    },
+  ]);
+
+  React.useEffect(() => {
+    setActiveMark(yearly);
+  }, [yearly]);
 
   const handleCheckMark = () => {
     setActiveMark(!activeMark);
   };
+  const handlePlan = (id: number) => {
+    dispatch(choosePlan(id));
+  };
+  const dispatchPlan = () => {
+    const dispatchPlanItem = plans.filter((item) => item.id === activePlan);
 
+    dispatch(
+      addPlanInfo({
+        title: dispatchPlanItem[0].title,
+        rate: activeMark ? dispatchPlanItem[0].rateMo * 10 : dispatchPlanItem[0].rateMo,
+        yearly: activeMark,
+      }),
+    );
+  };
   return (
     <section className={s.plan + ' ' + 'content-section'}>
       <div className={s.plan_body}>
@@ -23,61 +75,37 @@ export const Plan: React.FC = () => {
           subtitle="You have the option of monthly or yearly billing"
         />
         <div className={s.plan_body__row}>
-          <div className={s.plan_body__columns}>
-            <div className={s.plan_body__item + ' ' + s.active}>
-              <div className={s.plan_body__img}>
-                <img src={arcade} alt="" />
-              </div>
-              <div className={s.plan_body__content}>
-                <p>Arcade</p>
-                <span>&#36;9/mo</span>
-                {activeMark ? <span>2 months free</span> : null}
-              </div>
-            </div>
-          </div>
-          <div className={s.plan_body__columns}>
-            <div className={s.plan_body__item}>
-              <div className={s.plan_body__img}>
-                <img src={advanced} alt="" />
-              </div>
-              <div className={s.plan_body__content}>
-                <p>Arcade</p>
-                <span>&#36;9/mo</span>
-                {activeMark ? <span>2 months free</span> : null}
+          {plans.map((el) => (
+            <div className={s.plan_body__columns} key={el.id} onClick={() => handlePlan(el.id)}>
+              <div
+                className={
+                  el.id === activePlan ? s.plan_body__item + ' ' + s.active : s.plan_body__item
+                }>
+                <div className={s.plan_body__img}>
+                  <img src={el.img} alt="" />
+                </div>
+                <div className={s.plan_body__content}>
+                  <p>{el.title}</p>
+
+                  <span>&#36;{activeMark ? el.rateMo * 10 : el.rateMo} /mo</span>
+
+                  {activeMark ? <span>2 months free</span> : null}
+                </div>
               </div>
             </div>
-          </div>
-          <div className={s.plan_body__columns}>
-            <div className={s.plan_body__item}>
-              <div className={s.plan_body__img}>
-                <img src={pro} alt="" />
-              </div>
-              <div className={s.plan_body__content}>
-                <p>Arcade</p>
-                <span>&#36;9/mo</span>
-                {activeMark ? <span>2 months free</span> : null}
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
         <div className={s.plan_checkbox}>
-          {/* <label className={s.plan_checkbox__switch}>
-            <input type={s.plan_checkbox__input} />
-            <span className={s.plan_checkbox__slider + ' ' + s.plan_checkbox__round}></span>
-          </label> */}
-
-          {/* <label htmlFor="monthly">Monthly</label> */}
           <span className={!activeMark ? 'checkbox-before active' : 'checkbox-before'}>
             Monthly
           </span>
           <label className="switch">
-            <input type="checkbox" />
-            <span className="slider round" onClick={handleCheckMark}></span>
+            <input type="checkbox" checked={activeMark} />
+            <span className={'slider round '} onClick={handleCheckMark}></span>
           </label>
           <span className={activeMark ? 'checkbox-after active' : 'checkbox-after'}>Yearly</span>
-          {/* <label htmlFor="">Yearly</label> */}
         </div>
-        <ContentFooter />
+        <ContentFooter dispatchPlan={dispatchPlan} />
       </div>
     </section>
   );

@@ -1,6 +1,8 @@
 @import "../../scss/variables";
 
 .finish {
+  // width: 650px;
+
   &_body {
     position: relative;
     height: 100%;
@@ -22,6 +24,10 @@
         span {
           font-weight: 800;
           color: $nextStep;
+
+          @media (max-width: 595px) {
+            font-size: 14px;
+          }
         }
       }
       &_head {
@@ -29,11 +35,20 @@
         line-height: 20px;
         h3 {
           color: $nextStep;
+          @media (max-width: 595px) {
+            font-size: 16px;
+          }
         }
         span {
           font-size: 14px;
+          cursor: pointer;
           color: $coolGray;
           border-bottom: 2px solid $coolGray;
+
+          &:hover {
+            color: $checkMark;
+            border-bottom: 2px solid $checkMark;
+          }
           // text-decoration: underline;
         }
       }
@@ -82,8 +97,12 @@
       span {
         font-size: 20px;
         font-weight: 800;
-        color: $nextStep;
+        color: $checkMark;
         margin: 0 0 0 auto;
+
+        @media (max-width: 595px) {
+          font-size: 16px;
+        }
       }
     }
   }
